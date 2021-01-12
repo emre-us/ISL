@@ -1,0 +1,204 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+```{r}
+x <- matrix(c(1,2,3,4), nrow = 2, ncol=2)
+x
+matrix(c(1,2,3,4),nrow=2,ncol = 2,byrow = TRUE)
+sqrt(x)
+x^2
+```
+
+rnorm() function generates a vector of random normal variables, with first argument n the sample size. Each time we call this function, we will get a different answer.
+Here we create two correlated sets of numbers, x and y, and use the cor() function to compute the correlation between them.
+```{r}
+x <- rnorm(50)
+y <- x+rnorm(50, mean = 50, sd = 0.1)
+cor(x,y)
+```
+By default, rnorm() creates standard normal random variables with a mean of 0 and a standard deviation of 1. However, the mean and standard devi- ation can be altered using the mean and sd arguments, as illustrated above.
+Sometimes we want our code to reproduce the exact same set of random numbers; we can use the set.seed() function to do this. The set.seed() function takes an (arbitrary) integer argument.
+```{r}
+set.seed(1303)
+rnorm(50)
+```
+The textbook uses set.seed() throughout the labs whenever we perform calculations involving random quantities. In general this should allow the user to reproduce their results.
+```{r}
+set.seed(3)
+y <- rnorm(100)
+mean(y)
+var(y)
+sqrt(var(y))
+sd(y)
+```
+
+GRAPHICS
+```{r}
+x <- rnorm(100)
+y <- rnorm(100)
+plot(x,y, xlab = 'this is x-axis', ylab = 'this is y-axis', main = 'Plot of X vs Y')
+
+```
+We will often want to save the output of an R plot. The command that we use to do this will depend on the file type that we would like to create. For instance, to create a pdf, we use the pdf() function, and to create a jpeg, we use the jpeg() function.
+```{r}
+pdf('Ch2 Example Figure.pdf')
+plot(x,y, col = 'green')
+dev.off()
+```
+The function dev.off() indicates to R that we are done creating the plot. Alternatively, we can simply copy the plot window and paste it into an appropriate file type, such as a Word document.
+
+The function seq() can be used to create a sequence of numbers. For instance, seq(a,b) makes a vector of integers between a and b. There are many other options: for instance, seq(0,1,length=10) makes a sequence of 10 numbers that are equally spaced between 0 and 1. Typing 3:11 is a shorthand for seq(3,11) for integer arguments.
+```{r}
+x <- seq(-pi, pi, length = 50)
+x
+```
+
+We will now create some more sophisticated plots. The contour() func- tion produces a contour plot in order to represent three-dimensional data; it is like a topographical map. It takes three arguments:
+1. A vector of the x values (the first dimension);
+2. A vector of the y values (the second dimension), and
+3. A matrix whose elements correspond to the z value (the third dimen- sion) for each pair of (x,y) coordinates.
+```{r}
+y <- x
+f <- outer(x,y,function(x,y)cos(y)/(1+x^2))
+contour(x,y,f)
+contour(x,y,f,nlevels = 45, add = TRUE)
+fa <- (f-t(f))/2
+contour(x,y,fa, nlevels = 15)
+```
+
+The image() function works the same way as contour(), except that it produces a color-coded plot whose colors depend on the z value. This is known as a heatmap, and is sometimes used to plot temperature in weather forecasts. Alternatively, persp() can be used to produce a three-dimensional plot. The arguments theta and phi control the angles at which the plot is viewed.
+```{r}
+image(x,y,fa)
+persp(x,y,fa)
+persp(x,y,fa, theta = 30)
+persp(x,y,fa, theta = 30, phi = 40)
+```
+
+INDEXING DATA
+```{r}
+A <- matrix(1:16, 4,4)
+A
+A[2,3]
+```
+The command A[2,3] will select the element corresponding to the second row and the third col- umn. The first number after the open-bracket symbol [ always refers to the row, and the second number always refers to the column. We can also select multiple rows and columns at a time, by providing vectors as the indices.
+```{r}
+A[c(1,3),c(2,4)]
+A
+A[1:3,2:4]
+A[1:2,]
+A[,1:2]
+A[1,]
+```
+The use of a negative sign - in the index tells R to keep all rows or columns except those indicated in the index.
+```{r}
+A[-c(1,3),]
+A[-c(1,3),-c(1,3,4)]
+```
+The dim() function outputs the number of rows followed by the number of columns of a given matrix.
+```{r}
+dim(A)
+```
+
+LOADING DATA
+For most analyses, the first step involves importing a data set into R. The read.table() function is one of the primary ways to do this. We can use the function write.table() to export data.
+The following command will load the Auto.data file into R and store it as an object called Auto, in a format referred to as a data frame. Once the data has been loaded, the fix() function can be used to view it in a spreadsheet like window. However, the window must be closed before further R commands can be entered.
+```{r}
+Auto <- read.table('~/Documents/Programming/Data Science/Book-ISLR/Data/Auto.data')
+fix(Auto)
+```
+
+This particular data set has not been loaded correctly, because R has assumed that the variable names are part of the data and so has included them in the first row. The data set also includes a number of missing observations, indicated by a question mark ?. Missing values are a common occurrence in real data sets.
+Using the option header=T (or header=TRUE) in the read.table() function tells R that the first line of the file contains the variable names, and using the option na.strings tells R that any time it sees a particular character or set of characters (such as a question mark), it should be treated as a missing element of the data matrix. (Its listed as NA instead of ? in the dataframe)
+```{r}
+Auto <- read.table('~/Documents/Programming/Data Science/Book-ISLR/Data/Auto.data', header = TRUE, na.strings = '?')
+fix(Auto)
+```
+
+Alternatively we can use the read.csv() for the csv files.
+```{r}
+Auto <- read.csv('~/Documents/Programming/Data Science/Book-ISLR/Data/Auto.csv', header = TRUE, na.strings = '?')
+fix(Auto)
+dim(Auto)
+Auto[1:4,]
+```
+
+The dim() function tells us that the data has 397 observations, or rows, and nine variables, or columns. There are various ways to deal with the missing data. In this case, only five of the rows contain missing observations, and so we choose to use the na.omit() function to simply remove these rows.
+
+```{r}
+Auto <- na.omit(Auto)
+dim(Auto)
+```
+
+Once the data are loaded correctly, we can use names() to check the variable names.
+```{r}
+names(Auto)
+```
+
+
+ADDITIONAL GRAPHICAL & NUMERICAL SUMMARIES
+We can use the plot() function to produce scatterplots of the quantitative variables. However, simply typing the variable names will produce an error message, because R does not know to look in the Auto data set for those variables.
+To refer to a variable, we must type the data set and the variable name joined with a $ symbol. Alternatively, we can use the attach() function in order to tell R to make the variables in this data frame available by name.
+```{r}
+plot(Auto$cylinders, Auto$mpg)
+attach(Auto)
+plot(cylinders, mpg)
+```
+
+The cylinders variable is stored as a numeric vector, so R has treated it as quantitative. However, since there are only a small number of possible values for cylinders, one may prefer to treat it as a qualitative variable. The as.factor() function converts quantitative variables into qualitative variables.
+Subsequently, if the variable plotted on the x-axis is categorial, then boxplots will automatically be produced by the plot() function. As usual, a number of options can be specified in order to customize the plots.
+```{r}
+cylinders <- as.factor(Auto$cylinders)
+plot(cylinders, Auto$mpg)
+plot(cylinders, Auto$mpg, col='red')
+plot(cylinders, Auto$mpg, col='red', varwidth=TRUE)
+plot(cylinders, Auto$mpg, col='red', varwidth=TRUE, horizontal=TRUE)
+plot(cylinders, Auto$mpg, col='red', varwidth=TRUE, xlab = 'cylinders', ylab = 'MPG')
+```
+
+The hist() function can be used to plot a histogram. Note that col=2 has the same effect as col="red"
+
+```{r}
+hist(Auto$mpg, col=2)
+hist(Auto$mpg, col=2, breaks = 15)
+```
+
+The pairs() function creates a scatterplot matrix i.e. a scatterplot for every pair of variables for any given data set. We can also produce scatterplots for just a subset of the variables.
+```{r}
+pairs(Auto, col='blue')
+pairs(~ mpg + displacement + horsepower + weight + acceleration, Auto)
+```
+
+In conjunction with the plot() function, identify() provides a useful interactive method for identifying the value for a particular variable for points on a plot. We pass in three arguments to identify():
+1. the x-axis variable,
+2. the y-axis variable, and
+3. the variable whose values we would like to see printed for each point.
+Then clicking on a given point in the plot will cause R to print the value of the variable of interest. Right-clicking on the plot will exit the identify() function (control-click on a Mac). The numbers printed under the identify() function correspond to the rows for the selected points.
+```{r}
+plot(horsepower, mpg)
+identify(horsepower, mpg, name)
+```
+
+The summary() function produces a numerical summary of each variable in a particular data set.
+
+```{r}
+summary(Auto)
+summary(mpg)
+```
+
+Before exiting R, we may want to save a record of all of the commands that we typed in the most recent session; this can be accomplished using the savehistory() function. Next time we enter R, we can load that history using the loadhistory() function.

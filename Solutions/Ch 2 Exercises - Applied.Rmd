@@ -1,0 +1,189 @@
+
+
+8. This exercise relates to the College data set, which can be found in the file College.csv. It contains a number of variables for 777 different universities and colleges in the US.
+```{r}
+college <- read.csv('~/Documents/Programming/Data Science/Book-ISLR/Data/College.csv')
+fix(college)
+```
+You should notice that the first column is just the name of each university. We don’t really want R to treat this as data. However, it may be handy to have these names for later. Try the following commands:
+```{r}
+rownames(college) = college[,1]
+fix(college)
+```
+You should see that there is now a row.names column with the name of each university recorded. This means that R has given each row a name corresponding to the appropriate university. R will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the names are stored. Try:
+```{r}
+college = college[,-1]
+fix(college)
+```
+Now you should see that the first data column is Private. Note that another column labeled row.names now appears before the Private column. However, this is not a data column but rather the name that R is giving to each row.
+(c) i. Use the summary() function to produce a numerical summary of the variables in the data set.
+```{r}
+summary(college)
+```
+
+ii. Use the pairs() function to produce a scatterplot matrix of the first ten columns or variables of the data. Recall that you can reference the first ten columns of a matrix A using A[,1:10].
+```{r}
+pairs(college[1:10])
+```
+
+iii. Use the plot() function to produce side-by-side boxplots of Outstate versus Private.
+```{r}
+plot(college$Private, college$Outstate, xlab='Private College?', ylab='Out of State Tuition')
+```
+
+iv. Create a new qualitative variable, called Elite, by binning the Top10perc variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50 %.
+```{r}
+Elite <- rep('No', nrow(college))
+Elite[college$Top10perc > 50] = 'Yes'
+Elite = as.factor(Elite)
+college <- data.frame(college, Elite)
+```
+Use the summary() function to see how many elite univer- sities there are. Now use the plot() function to produce side-by-side boxplots of Outstate versus Elite.
+```{r}
+summary(Elite)
+plot(college$Elite, college$Outstate, xlab='Elite', ylab='Out of State Tuition')
+```
+So there are 78 elite Universities. 
+v. Use the hist() function to produce some histograms with differing numbers of bins for a few of the quantitative vari- ables. You may find the command par(mfrow=c(2,2)) useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.
+```{r}
+par(mfrow=c(2,2))
+hist(college$perc.alumni)
+hist(college$S.F.Ratio, breaks = 30)
+hist(college$Accept, breaks = 20)
+hist(college$Outstate, breaks = 50)
+
+```
+vi. Continue exploring the data, and provide a brief summary of what you discover.
+The summary of data shows some issues. For example, PhD and Grad.Rate are % but the max are more than 100. 
+
+
+9. This exercise involves the Auto data set studied in the lab. Make sure that the missing values have been removed from the data.
+```{r}
+#Using the option header=T (or header=TRUE) in the read.table() function tells R that the first line of the file contains the variable names, and using the option na.strings tells R that any time it sees a particular character or set of characters (such as a question mark), it should be treated as a missing element of the data matrix. (Its listed as NA instead of ? in the dataframe)
+
+Auto <- read.csv('~/Documents/Programming/Data Science/Book-ISLR/Data/Auto.csv', header = TRUE, na.strings = '?')
+Auto <- na.omit(Auto)
+```
+
+(a) Which of the predictors are quantitative, and which are qualitative?
+```{r}
+summary(Auto)
+```
+So clearly those other than name and origin are quantiative.
+
+(b) What is the range of each quantitative predictor? You can answer this using the range() function.
+
+```{r}
+range(Auto$mpg)
+range(Auto$cylinders)
+range(Auto$displacement)
+range(Auto$horsepower)
+range(Auto$weight)
+range(Auto$acceleration)
+range(Auto$year)
+
+#Alternatively we can use one of the 'apply function collection': apply(), lapply(), sapply(), tapply(). Apply function collection is used to avoid use of loop constructs.The format they take are:
+#apply(X, MARGIN, FUNCTION) where MARGIN=1 manipulation is performed on rows, 2 on columns, c(1,2) on both rows and columns. Output is list, vector or array.
+#lapply(X, FUNCTION) and output is list only.
+#sapply(X, FUNCTION) and output is in vector or matrix.
+#tapply(X, INDEX, FUNCTION=NULL) this function computes a measure (mean, median, min, max, etc.) or function for each factor variable in a vector.
+
+#So here we can use lappy or sapply to loop the range function on first 7 columns:
+lapply(Auto[,1:7], range)
+sapply(Auto[,1:7], range)
+```
+
+(c) What is the mean and standard deviation of each quantitative predictor?
+```{r}
+#As before we can use the sapply() or lappy() here. I chose sapply(). Also no need for year's mean or sd so I chose the first 6 columns instead:
+sapply(Auto[,1:6], mean)
+sapply(Auto[,1:6], sd)
+```
+
+(d) Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each quantitative predictor?
+```{r}
+Auto_rm <- Auto[-(10:85),]
+sapply(Auto_rm[,1:7],range)
+sapply(Auto_rm[,1:6],mean)
+sapply(Auto_rm[,1:6],sd)
+```
+
+(e) Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
+```{r}
+pairs(Auto)
+```
+Strong inverse relationships: mpg and displacement, mpg and horsepower, mpg and weight, displacemen and acceleration, horsepower and acceleration
+Weaker inverse relationships: year and displacement, year and horsepower, year and weight, weight and acceleration
+Strong positive relationships: displacement and horsepower, displacement and weight, horsepower and weight, mpg and year
+Weaker positive relationships: mpg and acceleration, year and acceleration
+
+(f) Suppose that we wish to predict gas mileage (mpg) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting mpg? Justify your answer.
+All of the other variables seem to have some relationship with mpg. However, including the name variable would likely cause overfitting.
+
+
+
+10. This exercise involves the Boston housing data set.
+
+(a) To begin, load in the Boston data set. The Boston data set is
+part of the MASS library in R. Read about the data set: How many rows are in this data set? How many columns? What do the rows and columns represent?
+
+```{r}
+library(MASS)
+?Boston
+dim(Boston)
+```
+506 rows and 14 columns. Each row represents a suburb of Boston and column represent info about that suburb from crime rates to parent-teacher ratio.
+
+(b) Make some pairwise scatterplots of the predictors (columns) in this data set. Describe your findings.
+```{r}
+pairs(Boston)
+```
+
+(c) Are any of the predictors associated with per capita crime rate? If so, explain the relationship.
+
+Although it is not discussed this far in the book, we can use sapply() to plot all the variables against the crime rate to get a better look than the busy pairs() plots above.
+```{r}
+par(mfrow=c(2,4))
+sapply(2:length(Boston), function(x){plot(Boston[,c(x,1)])})
+```
+It seems that the areas with the lowest proportion of residential land zoned for lots over 25,000 sq ft has a disproportionate crime rate. Similarly, relatively more industrialized town also seems to have a disproprtionately higher crime rate. We also see a close relationship between increased crime rate as the proportion of owner-occupied units built pre-1940 increases, and as the distance to an employment centre decreases.Interestingly, there seems to be suburbs with a particular property tax level that sees a high crime rate. Similrly, suburbs with a particular pupil-teacher ratio seems to have a high crime rate. We also see an increased crime rate as the median value of homes decline.
+
+(d) Do any of the suburbs of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each predictor.
+```{r}
+par(mfrow=c(1,3))
+hist(Boston$crim)
+hist(Boston$tax)
+hist(Boston$ptratio)
+```
+Majority of the suburbs in the data set have 0 or very low crime rates, though with a long right tail, ie some suburbs with high crime rate. Property tax seems to be divided into very high and low with almost no middle ground. The most common pupil-teacher ratio is towards the highest end, though there is still a wide dispersion ranging from 12 to 22. 
+
+(e) How many of the suburbs in this data set bound the Charles river?
+```{r}
+sum(Boston$chas)
+```
+
+(f) What is the median pupil-teacher ratio among the towns in this data set?
+```{r}
+median(Boston$ptratio)
+```
+
+(g) Which suburb of Boston has lowest median value of owner-occupied homes? What are the values of the other predictors for that suburb, and how do those values compare to the overall ranges for those predictors? Comment on your findings.
+```{r}
+Boston[which.min(Boston$medv),]
+summary(Boston)
+```
+Suburb no 399 has the lowest median value of owner-occupied homes at $5,000.
+We can see that this neighbourhood:
+  --> has a relatively high crime rate, closer to the max than min in the crim range.
+  --> has high non-retail business acres
+  --> has a high NOx concentration (parts per 10 million)
+  --> relatively fewer number of rooms per dwelling
+  --> entirely pre-1940 built neighbourhood
+  --> has a very low weighted mean of distances to five Boston employment centers
+  --> has the highest index of accessibility to radial highways
+  --> has a very high full-value property tax
+  --> has a very high pupil-teacher ratio
+  --> has the highest index value for proportion of black people (1000(Bk - 0.63)^2 where Bk is the proportion of black people)
+  --> has a very high % of lower status of the population
+
+
