@@ -12,6 +12,6 @@ For Python:
 
 For R:
 ...[R Code for ISLR](https://statlearning.com/code.html)
-...[asadoughi](http://asadoughi.github.io/stat-learning)
+<br>...[Amir Sadoughi](http://asadoughi.github.io/stat-learning)
 
 
