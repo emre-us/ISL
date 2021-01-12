@@ -8,9 +8,9 @@ The book itself uses R. I use both R and Python to solve the exercises. I will u
 In working through the exercises I relied a lot on the approaches used by the following:
 
    -For Python:  
-      [Alan Martyn](www.alanmartyn.com)
+      [stack overflow community](https://stackoverflow.com/); [Alan Martyn](www.alanmartyn.com)
 
    -For R:  
-      [R Code for ISLR](https://statlearning.com/code.html); [Amir Sadoughi](http://asadoughi.github.io/stat-learning)
+      [R Code for ISLR](https://statlearning.com/code.html); [stack overflow community](https://stackoverflow.com/); [Amir Sadoughi](http://asadoughi.github.io/stat-learning)
 
 
