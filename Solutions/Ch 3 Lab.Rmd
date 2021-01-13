@@ -1,0 +1,257 @@
+```{r}
+library(MASS)
+library(ISLR)
+```
+
+The MASS library contains the Boston data set, which records medv (median house value) for 506 neighborhoods around Boston. We will seek to predict medv using 13 predictors such as rm (average number of rooms per house), age (average age of houses), and lstat (percent of households with low socioeconomic status).
+```{r}
+fix(Boston)
+names(Boston)
+```
+
+
+SIMPLE LINEAR REGRESSION
+
+We will start by using the lm() function to fit a simple linear regression model, with medv as the response and lstat as the predictor. The basic lm() syntax is lm(y∼x,data), where y is the response, x is the predictor, and data is the data set in which these two variables are kept.
+```{r}
+lm.fit = lm(medv~lstat, data=Boston)
+lm.fit
+```
+We can use the names() function in order to find out what other pieces of information are stored in lm.fit. Although we can extract these quan- tities by name—e.g. lm.fit$coefficients—it is safer to use the extractor functions like coef() to access them.
+```{r}
+names(lm.fit)
+coef(lm.fit)
+```
+
+In order to obtain a confidence interval for the coefficient estimates, we can use the confint() command.
+```{r}
+confint(lm.fit)
+```
+
+The predict() function can be used to produce confidence intervals and prediction intervals for the prediction of medv for a given value of lstat.
+```{r}
+predict(lm.fit, data.frame(lstat=(c(5,10,15))),interval = 'confidence')
+```
+```{r}
+predict(lm.fit,data.frame(lstat=(c(5,10,15))),interval = 'prediction')
+```
+For instance, the 95 % confidence interval associated with a lstat value of 10 is (24.47, 25.63), and the 95 % prediction interval is (12.828, 37.28). As expected, the confidence and prediction intervals are centered around the same point (a predicted value of 25.05 for medv when lstat equals 10), but the latter are substantially wider.
+We will now plot medv and lstat along with the least squares regression line using the plot() and abline() functions.
+```{r}
+plot(Boston$lstat, Boston$medv)
+abline(lm.fit)
+```
+
+There is some evidence for non-linearity in the relationship between lstat and medv. We will explore this issue later in this lab.
+The abline() function can be used to draw any line, not just the least squares regression line. To draw a line with intercept a and slope b, we type abline(a,b). Below we experiment with some additional settings for plotting lines and points. The lwd=3 command causes the width of the regression line to be increased by a factor of 3; this works for the plot() and lines() functions also. We can also use the pch option to create different plotting symbols.
+```{r}
+plot(Boston$lstat, Boston$medv, col='blue', pch=11)
+abline(lm.fit,lwd=3, col='red')
+plot(1:20, 1:20, pch=1:20)
+
+```
+
+
+
+Diagnostics (Section 3.3.3. Potential problems):
+
+1. Non-linearity of data 
+Residual plots are a useful graphical tool for identifying non-linearity.
+  Simple regression -> plot the residuals (y - yhat) against the predictor x.
+  Multiple regression -> plot the residuals vs the predicted (ie fitted) values (yhat).
+Ideally the residual plot will show no discerible pattern. The presence of a pattern may indicate a problem with some aspect of the linear model. 
+
+2. Correlation of Error Terms
+If there is correlation of error terms, then the estimated standard errors will tend to underestimate the true standard errors. As a result, confidence and prediction intervals will be narrower than they should be.
+
+3. Non-constant Variance of Error Terms (Heteroskedasticity)
+Heteroskedasticity can be identified from the presence of a funnel shape in the residual plot. When faced with this problem, one possible solution is to transform the response Y using concave function such as logY or sqrt(Y).
+
+4. Outliers
+Even if an outlier does not have much effect on the least square fit, it can cause other problems. (It can impact R-squared and RSE which is used for calculating CIs and p-values).
+Residual plots can help identifying outliers. However, it can be difficult to decide how large a residual needs to be before we consider the point to be an outlier. To address this problem, instead of plotting the residuals we can plot the studentized residuals, computed by dividing each residual by its estimated standard error. Observations > |3| are possible outliers.
+
+5. High Leverage Points
+Outliers are those responses (y's) that are unusual given the predictor x. In contrast, observations with high leverage have an unusual value for x. 
+High leverage observations tend to have a sizeable impact on the estimated regression line.
+
+6. Collinearity
+Collinearity refers to the situation in which two or more predictor variables are closely related to each other. Presence of collinearity can pose problems since it can be difficult to separate out the individual effects of collinear variables on the response, resulting in uncertainty in the coefficient estimates. This in turn causes the standard error for beta-hat to grow. Since t-stat for each predictor is calculated by dividing beta-hat by its st.err., collinearity therefore results in a decline in the t-stat. As a result, we may fail to reject H-naught: beta=0. This means that the power of the hypothesis test (the prob. of correctly detecting a non-zero coefficient) is reduced by collinearity.
+A simple way to detect collinearity is to look at the correlation matrix of the predictors. An element of this matrix that is large in absolute value indicates a pair of highly correlated variables, and therefore a collinearity problem in the data. Unfortunately, not all collinearity problems can be detected by inspection of the correlation matrix: it is possible for collinear- ity to exist between three or more variables even if no pair of variables has a particularly high correlation. We call this situation multicollinearity. Instead of inspecting the correlation matrix, a better way to assess multicollinearity is to compute the variance inflation factor (VIF). The VIF is the ratio of the variance of beta when fitting the full model divided by the variance of beta if fit on its own. The smallest possible value for VIF is 1, which indicates the complete absence of collinearity. Typically in practice there is a small amount of collinearity among the predictors. As a rule of thumb, a VIF value that exceeds 5 or 10 indicates a problematic amount of collinearity.
+When faced with the problem of collinearity, there are two simple solu- tions. 
+  The first is to drop one of the problematic variables from the regres- sion. This can        usually be done without much compromise to the regression fit, since the presence of         collinearity implies that the information that this variable provides about the response is   redundant in the presence of the other variables.
+  The second solution is to combine the collinear variables together into a single predictor.
+
+
+Now we examine some diagnostic plots of Boston data set. Four diagnostic plots are automatically produced by applying the plot() function directly to the output from lm(). In general, this command will produce one plot at a time, and hitting Enter will generate the next plot. However, it is often convenient to view all four plots together.
+```{r}
+par(mfrow=c(2,2))
+plot(lm.fit)
+```
+
+Alternatively, we can compute the residuals from a linear regression fit using the residuals() function. 
+The function rstudent() will return the studentized residuals, and we can use this function to plot the residuals against the fitted values.
+```{r}
+plot(predict(lm.fit), residuals(lm.fit))
+plot(predict(lm.fit), rstudent(lm.fit))
+```
+
+On the basis of the residual plots, there is some evidence of non-linearity.
+
+Leverage statistics can be computed for any number of predictors using the hatvalues() function.
+The which.max() function indetifies the index of the largest element of a vector. In this case, it tells us which observation has the largest leverage statistic.
+```{r}
+plot(hatvalues(lm.fit))
+which.max(hatvalues(lm.fit))
+```
+
+
+
+
+
+MULTIPLE LINEAR REGRESSION
+
+In order to fit a multiple linear regression model using least squares, we again use the lm() function. The syntax lm(y∼x1+x2+x3) is used to fit a model with three predictors, x1, x2, and x3. The summary() function now outputs the regression coefficients for all the predictors.
+```{r}
+lm.fit = lm(Boston$medv ~ Boston$lstat + Boston$age, data = Boston)
+summary(lm.fit)
+```
+
+The Boston data set contains 13 variables, and so it would be cumbersome to have to type all of these in order to perform a regression using all of the predictors. Instead, we can use the following short-hand:
+```{r}
+lm.fit = lm(medv ~ . , data = Boston)
+summary(lm.fit)
+```
+
+We can access the individual components of a summary object by name (type ?summary.lm to see what is available). 
+```{r}
+?summary.lm
+summary(lm.fit)$adj.r.squared
+summary(lm.fit)$sigma
+summary(lm.fit)$fstatistic
+```
+
+The vif() function, part of the car package, can be used to compute variance inflation factors. (To test for multicollinearity. If VIF > 5 or 10 then problematic amount of multicollinearity is present.) Most VIF’s are low to moderate for this data. The car package is not part of the base R installation so it must be downloaded the first time you use it via the install.packages option in R.
+(Note that I was getting an error in installing the package, which was resolved after I closed the .Rmd file and restarted the RStudio. You can then either type install.packages('car') in the console or go to Tools->Install Packages...).
+(Also note that after the restart, when I tried to run the vif() function I would get the following error: Error: object of type 'closure' is not subsettable. It turns out, obviously I forgot to load up the Boston data set after after the restart. So do a Run All before running the vif() function! :) )
+```{r}
+library(car)
+vif(lm.fit)
+```
+`
+What if we would like to perform a regression using all of the variables but one? For example, in the above regression output, age has a high p-value. So we may wish to run a regression excluding this predictor. The following syntax results in a regression using all predictors except age.
+```{r}
+lm.fit1 <- lm(medv ~ . , -age, data = Boston)
+summary(lm.fit1)
+```
+
+Alternatively, the update() function can be used.
+```{r}
+lm.fit1 <- update(lm.fit, ~.-age)
+summary(lm.fit1)
+```
+
+
+
+
+
+INTERACTION TERMS
+
+It is easy to include interaction terms in a linear model using the lm() function. The syntax lstat:black tells R to include an interaction term between lstat and black. The syntax lstat*age simultaneously includes lstat, age, and the interaction term lstat×age as predictors; it is a shorthand for lstat+age+lstat:age.
+```{r}
+summary(lm(medv ~ lstat * age, data = Boston))
+```
+
+
+
+
+
+NON-LINEAR TRANSFORMATIONS OF PREDICTORS
+
+The lm() function can also accommodate non-linear transformations of the predictors. For instance, given a predictor X, we can create a predictor X2 using I(X^2). The function I() is needed since the ^ has a special meaning in a formula; wrapping as we do allows the standard usage in R, which is I() to raise X to the power 2. We now perform a regression of medv onto lstat and lstat2.
+```{r}
+lm.fit2 <- lm(medv ~ lstat + I(lstat^2), data = Boston)
+summary(lm.fit2)
+```
+The near-zero p-value associated with the quadratic term suggests that it leads to an improved model. We use the anova() function to further quantify the extent to which the quadratic fit is superior to the linear fit.
+```{r}
+lm.fit <- lm(medv ~ lstat, data = Boston)
+anova(lm.fit, lm.fit2)
+```
+Here Model 1 represents the linear submodel containing only one predictor,lstat, while Model 2 corresponds to the larger quadratic model that has two predictors, lstat and lstat2. The anova() function performs a hypothesis test comparing the two models. 
+The null hypothesis is that the two models fit the data equally well, and the alternative hypothesis is that the full model is superior. 
+Here the F-statistic is 135 and the associated p-value is virtually zero. This provides very clear evidence that the model containing the predictors lstat and lstat2 is far superior to the model that only contains the predictor lstat. This is not surprising, since earlier we saw evidence for non-linearity in the relationship between medv and lstat. 
+If we type
+```{r}
+par(mfrow=c(2,2))
+plot(lm.fit2)
+```
+then we see that when the lstat2 term is included in the model, there is little discernible pattern in the residuals.
+In order to create a cubic fit, we can include a predictor of the form I(X^3). However, this approach can start to get cumbersome for higher- order polynomials. A better approach involves using the poly() function to create the polynomial within lm(). For example, the following command produces a fifth-order polynomial fit:
+```{r}
+lm.fit5 <- lm(medv ~ poly(lstat, 5), data = Boston)
+summary(lm.fit5)
+```
+This suggests that including additional polynomial terms, up to fifth order, leads to an improvement in the model fit! However, further investigation of the data reveals that no polynomial terms beyond fifth order have signifi- cant p-values in a regression fit.
+Of course, we are in no way restricted to using polynomial transforma- tions of the predictors. Here we try a log transformation.
+```{r}
+summary(lm(medv~log(rm), data = Boston))
+```
+
+
+
+
+
+QUALITATIVE PREDICTORS
+
+We will now examine the Carseats data, which is part of the ISLR library. We will attempt to predict Sales (child car seat sales) in 400 locations based on a number of predictors.
+```{r}
+fix(Carseats)
+names(Carseats)
+```
+
+The Carseats data includes qualitative predictors such as Shelveloc, an in- dicator of the quality of the shelving location—that is, the space within a store in which the car seat is displayed—at each location. The pre- dictor Shelveloc takes on three possible values, Bad, Medium, and Good.
+Given a qualitative variable such as Shelveloc, R generates dummy variables automatically. Below we fit a multiple regression model that includes some interaction terms.
+```{r}
+lm.fit <- lm(Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
+summary(lm.fit)
+```
+
+The contrasts() function returns the coding that R uses for the dummy variables.
+```{r}
+contrasts(Carseats$ShelveLoc)
+```
+
+Use ?contrasts to learn about other contrasts, and how to set them.
+```{r}
+?contrasts
+```
+R has created a ShelveLocGood dummy variable that takes on a value of 1 if the shelving location is good, and 0 otherwise. It has also created a ShelveLocMedium dummy variable that equals 1 if the shelving location is medium, and 0 otherwise. A bad shelving location corresponds to a zero for each of the two dummy variables. The fact that the coefficient for ShelveLocGood in the regression output is positive indicates that a good shelving location is associated with high sales (relative to a bad location). And ShelveLocMedium has a smaller positive coefficient, indicating that a medium shelving location leads to higher sales than a bad shelving location but lower sales than a good shelving location.
+
+
+
+
+
+WRITING FUNCTIONS
+As we have seen, R comes with many useful functions, and still more func- tions are available by way of R libraries. However, we will often be inter- ested in performing an operation for which no function is available. In this setting, we may want to write our own function. For instance, below we provide a simple function that reads in the ISLR and MASS libraries, called LoadLibraries(). Before we have created the function, R returns an error if we try to call it.
+```{r}
+Loadlibraries()
+```
+We now create the function. Note that the + symbols are printed by R and should not be typed in. The { symbol informs R that multiple commands are about to be input. Hitting Enter after typing { will cause R to print the + symbol. We can then input as many commands as we wish, hitting Enter after each one. Finally the } symbol informs R that no further commands will be entered.
+```{r}
+Loadlibraries <- function(){
+  library(ISLR)
+  library(MASS)
+  print('The libraries have been loaded.')
+}
+```
+Now if we type in LoadLibraries, R will tell us what is in the function.
+```{r}
+Loadlibraries
+```
+If we call the function, the libraries are loaded in and the print statement is output.
+(Note that here you may get the following error: "invalid argument to unary operator". If you do, it is because of the + symbol in defining the function. You are not supposed to type it yourself. In fact, depeding on the version you use, it may not even be there when you hit Enter. So remove the + you typed in, if you come across this error.)
+```{r}
+Loadlibraries()
+```
+Note that we used this function creation in Chapter 2 exercises, question 10(b).
