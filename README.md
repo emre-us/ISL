@@ -13,4 +13,9 @@ In working through the exercises I relied a lot on the approaches used by the fo
    -For R:  
       [R Code for ISLR](https://statlearning.com/code.html); [stack overflow community](https://stackoverflow.com/); [Amir Sadoughi](http://asadoughi.github.io/stat-learning)
 
+For R, I recommend using [Rstudio IDE](https://rstudio.com/products/rstudio/download/), and, for Python, either JupyterLab or Jupyter Notebook via [Anaconda](https://www.anaconda.com/).
+
+For these exercises I additionally installed the following packages:
+For R: ISLR, car
+For Python: Numpy, Pandas, Matplotlib, Seaborn
 
