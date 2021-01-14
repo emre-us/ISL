@@ -11,7 +11,7 @@ In working through the exercises I relied a lot on the approaches used by the fo
       [stack overflow community](https://stackoverflow.com/); [Alan Martyn](www.alanmartyn.com)
 
    -> For R:  
-      [R Code for ISLR](https://statlearning.com/code.html); [stack overflow community](https://stackoverflow.com/); [Amir Sadoughi](http://asadoughi.github.io/stat-learning)
+      [R Code for ISLR](https://statlearning.com/code.html); [stack overflow community](https://stackoverflow.com/); [Amir Sadoughi](http://asadoughi.github.io/stat-learning); [Anmol Thind](https://github.com/athi94)
 
 For R, I recommend using [Rstudio IDE](https://rstudio.com/products/rstudio/download/), and, for Python, either JupyterLab or Jupyter Notebook via [Anaconda](https://www.anaconda.com/). 
 Also if you are a Mac user, you will need to install [XQuartz](https://www.xquartz.org/) to run the fix() function in R.
@@ -22,3 +22,4 @@ For these exercises I additionally installed the following packages:
    
    -> Python: Numpy, Pandas, Matplotlib, Seaborn
 
+For writing the formulas in the Markdowns, I used the help of [Visual Math Editor](http://visualmatheditor.equatheque.net/VisualMathEditor.html)
