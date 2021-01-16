@@ -16,6 +16,8 @@ In working through the exercises I relied a lot on the approaches used by the fo
 For R, I recommend using [Rstudio IDE](https://rstudio.com/products/rstudio/download/), and, for Python, either JupyterLab or Jupyter Notebook via [Anaconda](https://www.anaconda.com/). 
 Also if you are a Mac user, you will need to install [XQuartz](https://www.xquartz.org/) to run the fix() function in R.
 
+If you are new to R I highly recommend the excellent educational modules at [Teacup Giraffes and Statistics] (https://tinystats.github.io/teacups-giraffes-and-statistics/index.html)
+
 For these exercises I additionally installed the following packages:
    
    -> R: ISLR, car
