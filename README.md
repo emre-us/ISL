@@ -1,5 +1,5 @@
 # ISL
-Solutions to the book "Introduction to Statistical Learning" using Python and R.
+Unofficial Solutions to "Introduction to Statistical Learning" using Python and R.
 
 This repository contains my solutions to the end-of-chapter exercises for the book [An Introduction to Statistical Learning](https://statlearning.com/) written by Gareth James, Daniela Witten, Trever Hastie, and Robert Tibshani. 
 
