@@ -4,9 +4,9 @@
 
 The book itself uses R. I use both R and Python to solve the exercises. I will update this Repository Chapter by Chapter as I go along.
 
-Lab in R | Lab in Python    Solutions in R | Solutions in Python
--------- | -------------    -------------- | -------------------
-[Chapter 2](https://github.com/e-usenmez/ISL/Ch-3-Linear-Regression-Lab-in-R.html) | [Chapter 2](https://github.com/e-usenmez/ISL/Ch-3-Linear-Regression-Lab-in-R.html)    [Chapter 3](https://github.com/e-usenmez/ISL/Ch-3-Linear-Regression-Lab-in-R.html) | [Chapter 3](https://github.com/e-usenmez/ISL/Ch-3-Linear-Regression-Lab-in-R.html)
+| Lab in R | Lab in Python |   | Solutions in R | Solutions in Python |
+| -------- | ------------- |   | -------------- | ------------------- |
+| [Chapter 2](docs/Ch-3-Linear-Regression-Lab-in-R.html) | [Chapter 2](https://github.com/e-usenmez/ISL/Ch-3-Linear-Regression-Lab-in-R.html) |   | [Chapter 3](docs/Ch-3-Linear-Regression-Exercises-in-R.html) | [Chapter 3](https://github.com/e-usenmez/ISL/Ch-3-Linear-Regression-Lab-in-R.html) |
 
 You can use the [editor on GitHub](https://github.com/e-usenmez/ISL/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
