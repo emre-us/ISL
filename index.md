@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Unofficial Solutions to ISL in Python and R
 
 You can use the [editor on GitHub](https://github.com/e-usenmez/ISL/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
