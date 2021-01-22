@@ -1,8 +1,6 @@
-<div align='center'>
   
 ## Unofficial Solutions to ISL in Python and R
 
-</div>
 
 This book is essential for those starting out in data science and machine learning. 
 It can be obtained freely from the authors' website. Clicking on the book cover will take you there.
@@ -10,11 +8,11 @@ It can be obtained freely from the authors' website. Clicking on the book cover 
 [<img src="https://statlearning.com/ISL%20Cover%202.jpg">](https://statlearning.com/)
 
  
-<div align='center'>
+
   
 ## Labs and Exercise Solutions
 
-</div>
+
 
 In working through the Labs and Exercises I added my notes, additional info, and commentary where I ran into errors and how I resolved them.
 I highly recommend spending the time to work through Conceptual questions before attempting the Applied exercises. It is extremely important to get the fundamentals and build on them. Afterall, time spent on the basics is time never wasted.
