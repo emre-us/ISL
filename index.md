@@ -1,5 +1,6 @@
 ## Unofficial Solutions to ISL in Python and R
 
+[<img src="https://statlearning.com/ISL%20Cover%202.jpg">](https://statlearning.com/)
 [An Introduction to Statistical Learning](https://statlearning.com/) written by Gareth James, Daniela Witten, Trever Hastie, and Robert Tibshani. 
 
 
