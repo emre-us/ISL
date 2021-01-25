@@ -5,7 +5,7 @@
 This book is essential for those starting out in data science and machine learning. 
 It can be obtained freely from the authors' website. Clicking on the book cover will take you there.
 
-[<img src="https://github.com/e-usenmez/ISL/blob/gh-pages/ISL%20Cover%202.jpg" />](https://statlearning.com/)
+[<img src="./ISL%20Cover%202.jpg" />](https://statlearning.com/)
 
  
 
