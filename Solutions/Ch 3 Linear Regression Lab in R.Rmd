@@ -1,7 +1,17 @@
+---
+title: "ISL Ch 3: Linear Regression: Lab in R"
+author: Emre Usenmez
+date: 2021-Jan
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_collapsed: true
+    toc_depth: 3
+    number_sections: false
+    theme: simplex
+---
 
-<center> 
-# Ch 3: Linear Regressions: Lab 
-</center>
 
 <br>
 
@@ -19,9 +29,9 @@ names(Boston)
 ```
 
 
-<br><br><br>
+<br><br><br><br><br><br>
 
-## SIMPLE LINEAR REGRESSION
+# SIMPLE LINEAR REGRESSION
 
 We will start by using the lm() function to fit a simple linear regression model, with medv as the response and lstat as the predictor. The basic lm() syntax is lm(y∼x,data), where y is the response, x is the predictor, and data is the data set in which these two variables are kept.
 
@@ -78,13 +88,13 @@ abline(lm.fit,lwd=3, col='red')
 plot(1:20, 1:20, pch=1:20)
 ```
 
+<br><br><br><br><br><br>
 
-
-### Diagnostics (Section 3.3.3. Potential problems):
+# DIAGNOSTICS
 
 <br>
 
-#### 1. Non-linearity of data 
+## 1. Non-linearity of data 
 Residual plots are a useful graphical tool for identifying non-linearity.
 
   + Simple regression -> plot the residuals ($y - \hat y$) against the predictor x.
@@ -92,33 +102,33 @@ Residual plots are a useful graphical tool for identifying non-linearity.
 
 Ideally the residual plot will show no discernible pattern. The presence of a pattern may indicate a problem with some aspect of the linear model. 
 
-<br>
+<br><br>
 
-#### 2. Correlation of Error Terms
+## 2. Correlation of Error Terms
 If there is correlation of error terms, then the estimated standard errors will tend to underestimate the true standard errors. As a result, confidence and prediction intervals will be narrower than they should be.
 
-<br>
+<br><br>
 
-#### 3. Non-constant Variance of Error Terms (Heteroskedasticity)
+## 3. Non-constant Variance of Error Terms (Heteroskedasticity)
 Heteroskedasticity can be identified from the presence of a *funnel shape* in the residual plot. When faced with this problem, one possible solution is to transform the response Y using concave function such as $\log Y$ or $\sqrt Y$.
 
-<br>
+<br><br>
 
-#### 4. Outliers
+## 4. Outliers
 Even if an outlier does not have much effect on the least square fit, it can cause other problems. (It can impact R-squared and RSE which is used for calculating CIs and p-values).
 
 Residual plots can help identifying outliers. However, it can be difficult to decide how large a residual needs to be before we consider the point to be an outlier. To address this problem, instead of plotting the residuals we can plot the studentized residuals, computed by dividing each residual by its estimated standard error. *Observations > |3| are possible outliers*.
 
-<br>
+<br><br>
 
-#### 5. High Leverage Points
+## 5. High Leverage Points
 Outliers are those responses (y's) that are unusual given the predictor x. In contrast, observations with high leverage have an unusual value for x. 
 
 High leverage observations tend to have a sizable impact on the estimated regression line.
 
-<br>
+<br><br>
 
-#### 6. Collinearity
+## 6. Collinearity
 Collinearity refers to the situation in which two or more predictor variables are closely related to each other. 
 
 Presence of collinearity can pose problems since it can be difficult to separate out the individual effects of collinear variables on the response, resulting in uncertainty in the coefficient estimates. This in turn causes the standard error for $\hat\beta$ to grow. Since t-stat for each predictor is calculated by dividing $\hat\beta$ by its st.err., collinearity therefore results in a decline in the t-stat. As a result, we may fail to reject $H_0 : \beta = 0$. This means that the power of the hypothesis test (the prob. of correctly detecting a non-zero coefficient) is reduced by collinearity.
@@ -149,7 +159,7 @@ par(mfrow=c(2,2))
 plot(lm.fit)
 ```
 
-<br>
+<br><br>
 
 Alternatively, we can compute the residuals from a linear regression fit using the residuals() function.
 
@@ -174,7 +184,7 @@ which.max(hatvalues(lm.fit))
 
 <br><br><br><br><br><br>
 
-## MULTIPLE LINEAR REGRESSION
+# MULTIPLE LINEAR REGRESSION
 
 <br>
 
@@ -246,7 +256,7 @@ summary(lm.fit1)
 
 <br><br><br><br><br><br>
 
-## INTERACTION TERMS
+# INTERACTION TERMS
 
 <br>
 
@@ -324,7 +334,7 @@ summary(lm(medv~log(rm), data = Boston))
 
 <br><br><br><br><br><br>
 
-## QUALITATIVE PREDICTORS
+# QUALITATIVE PREDICTORS
 
 <br>
 
@@ -376,7 +386,7 @@ And ShelveLocMedium has a smaller positive coefficient, indicating that a medium
 
 <br><br><br><br><br><br>
 
-## WRITING FUNCTIONS
+# WRITING FUNCTIONS
 
 <br>
 
@@ -421,3 +431,5 @@ Loadlibraries()
 <br>
 
 Note that we already used this function creation in Chapter 2 exercises, question 10(b).
+
+# [Home](http://e-usenmez.github.io/ISL/)
