@@ -25,11 +25,13 @@ I highly recommend spending some time to work through the Conceptual questions b
 | Ch 2: Statistical Learning | [**Ch 2 Lab in R**](docs/Solutions/Ch-2-Statistical-Learning-R.html) | [**Ch 2 Exercises: Conceptual**](docs/Solutions/Ch-2-Statistical-Lerning-Python.html) | [**Ch 2 Solutions in R**](docs/Solutions/Ch-2-Linear-Regression-Exercises-in-R.html) | [**Ch 2 Solutions in Python**](docs/Solutions/Ch-2-Linear-Regression-Exercises-in-Python.html) |
 | Ch 3: Linear Regression | [Ch 3 Lab in R](https://e-usenmez.github.io/ISL/Solutions/Ch-3-Linear-Regression-Lab-in-R.html) | [Ch 3 Solutions: Conceptual](https://e-usenmez.github.io/ISL/Solutions/Ch3-LinReg-Conceptual.html) | [Ch 3 Solutions in R](https://e-usenmez.github.io/ISL/Solutions/Ch3-LR-Applied-R.html) | [Ch 3 Solutions in Python](https://e-usenmez.github.io/ISL/Solutions/Ch3-LR-Applied-Python.html) |
 
-<br><br><br><br><br>
+<br><br>
 
-I would recommend using [RStudio](https://rstudio.com) for R, and JupyterLab within [Anaconda](https://www.anaconda.com). They both have dark mode which makes it a whole lot easier on the eyes.
+I would recommend using [RStudio](https://rstudio.com) for R, and JupyterLab within [Anaconda](https://www.anaconda.com). 
+<br>
+They both have 'dark mode' which makes it a whole lot easier on the eyes when working on these.
 
-<br><br><br>
+<br><br>
 
 For Python, I would also recommend looking through the guides of the following libraries: 
 <br><br>
