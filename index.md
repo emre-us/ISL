@@ -5,7 +5,7 @@
 This book is essential for those starting out in data science and machine learning. 
 It can be obtained freely from the authors' website. Clicking on the book cover will take you there.
 
-[<img src="/ISL Cover 2.jpg">](https://statlearning.com/)
+[<img src="/ISL%20Cover%202.jpg">](https://statlearning.com/)
 
  
 
@@ -23,7 +23,7 @@ I highly recommend spending some time to work through the Conceptual questions b
 |    | Lab-R  | Exercises: Conceptual | Exercises: Applied in R | Exercises: Applied in Python |
 | -- | ------ | ----- | ----------- | ----------- |
 | Ch 2: Statistical Learning | [**Ch 2 Lab in R**](docs/Solutions/Ch-2-Statistical-Learning-R.html) | [**Ch 2 Exercises: Conceptual**](docs/Solutions/Ch-2-Statistical-Lerning-Python.html) | [**Ch 2 Solutions in R**](docs/Solutions/Ch-2-Linear-Regression-Exercises-in-R.html) | [**Ch 2 Solutions in Python**](docs/Solutions/Ch-2-Linear-Regression-Exercises-in-Python.html) |
-| Ch 3: Linear Regression | [Ch 3 Lab in R](https://e-usenmez.github.io/ISL/Solutions/Ch-3-Linear-Regression-Lab-in-R.html) | [Ch 3 Solutions: Conceptual](https://e-usenmez.github.io/ISL/Solutions/Ch3-LinReg-Conceptual.html) | [Ch 3 Solutions in R](https://e-usenmez.github.io/ISL/Solutions/Ch3-LR-Applied-R.html) | [Ch 3 Solutions in Python](docs/Solutions/Ch-3-LR-Applied-Python.ipynb) |
+| Ch 3: Linear Regression | [Ch 3 Lab in R](https://e-usenmez.github.io/ISL/Solutions/Ch-3-Linear-Regression-Lab-in-R.html) | [Ch 3 Solutions: Conceptual](https://e-usenmez.github.io/ISL/Solutions/Ch3-LinReg-Conceptual.html) | [Ch 3 Solutions in R](https://e-usenmez.github.io/ISL/Solutions/Ch3-LR-Applied-R.html) | [Ch 3 Solutions in Python](docs/Solutions/Ch3-LR-Applied-Python.ipynb) |
 
 <br><br><br><br><br>
 
